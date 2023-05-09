@@ -1,0 +1,13 @@
+[window]
+width  = 1200
+height = 800
+
+[maze]
+rows      = 24
+cols      = 24
+
+[genetic]
+population_size = 100
+genome_size     = 100
+crossover_rate  = 0.7
+mutation_rate   = 0.0001

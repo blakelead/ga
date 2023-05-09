@@ -1,0 +1,5 @@
+BreakBeforeBraces: Allman
+ColumnLimit: 0
+IndentWidth: 2
+Language: Cpp
+Standard: c++20
