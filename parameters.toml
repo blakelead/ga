@@ -3,8 +3,8 @@ width  = 1200
 height = 800
 
 [maze]
-rows      = 49
-cols      = 49
+rows      = 19
+cols      = 19
 type      = 1 # 0=dfs 1=prim
 
 [genetic]

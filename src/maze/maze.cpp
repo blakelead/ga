@@ -22,7 +22,7 @@ float maze::test_path(const path &path) const
     position next_position = current_position + direction;
     if (visited.find(next_position.row * m_cols + next_position.col) != visited.end())
     {
-      // penalty++;
+      penalty++;
     }
     if (is_wall(next_position))
     {
@@ -41,7 +41,7 @@ float maze::test_path(const path &path) const
   }
 
   float distance = std::sqrt(std::pow(current_position.row - m_end.row, 2) + std::pow(current_position.col - m_end.col, 2));
-  return 1 / (distance * 8 + penalty + 1);
+  return 1 / (distance  + penalty + 1);
 }
 
 bool maze::is_within_bounds(const position &pos, int row_offset, int col_offset) const

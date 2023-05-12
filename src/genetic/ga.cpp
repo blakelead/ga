@@ -84,13 +84,13 @@ void ga::mutate(genome &genome)
       genome.data[i] = (rand() % 2);
     }
   }
-  // deletion mutation
-  float dr = (float)(rand()) / (float)(RAND_MAX);
-  if (dr < m_mutation_rate)
-  {
-    int index = rand() % genome.size();
-    genome.data.erase(genome.data.begin() + index);
-  }
+  // // deletion mutation
+  // float dr = (float)(rand()) / (float)(RAND_MAX);
+  // if (dr < m_mutation_rate)
+  // {
+  //   int index = rand() % genome.size() - 1;
+  //   genome.data.erase(genome.data.begin() + index, genome.data.begin() + index + 1);
+  // }
   // insertion mutation
   float ir = (float)(rand()) / (float)(RAND_MAX);
   if (ir < m_mutation_rate)
@@ -105,12 +105,12 @@ void ga::mutate(genome &genome)
 
 path ga::decode(const genome &genome) const
 {
-  std::vector<position> directions = {position(-1, 0), position(0, 1), position(1, 0), position(0, -1)};
   path path;
   for (int i = 0; i < genome.size(); i += m_gene_size)
   {
+    std::vector<position> directions = {position(-1, 0), position(0, 1), position(1, 0), position(0, -1)};
     int dir = genome[i] * 2 + genome[i + 1];
-    path.directions.push_back(directions[dir]);
+    path.directions.push_back({directions[dir].row, directions[dir].col});
   }
   return path;
 }

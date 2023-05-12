@@ -16,5 +16,7 @@ cmake --build build/Debug
 
 ## sources
 
-https://blog.gamedev.tv/procedural-generation-of-mazes-in-unreal-engine-part-i
-https://github.com/fadcrep/the-best-artificial-intelligence-books/blob/master/books/AI%20Techniques%20for%20Game%20Programming.pdf
+the following resources helped me a lot:
+
+- https://blog.gamedev.tv/procedural-generation-of-mazes-in-unreal-engine-part-i
+- https://github.com/fadcrep/the-best-artificial-intelligence-books/blob/master/books/AI%20Techniques%20for%20Game%20Programming.pdf

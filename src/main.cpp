@@ -24,7 +24,7 @@ int main()
 
   while (!WindowShouldClose())
   {
-    if (ga.get_current_generation_best() < 1)
+    if (ga.get_current_generation_best() < 1 || IsKeyReleased(KEY_SPACE))
     {
       path = ga.generation(maze);
     }
