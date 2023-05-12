@@ -5,7 +5,7 @@ height = 800
 [maze]
 rows      = 19
 cols      = 19
-type      = 1 # 0=dfs 1=prim
+type      = 1 # generation algorithm: 0=dfs, 1=prim
 
 [genetic]
 population_size = 500
