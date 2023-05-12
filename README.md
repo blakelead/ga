@@ -1,18 +1,30 @@
 # ga
 
-playing with genetic algorithms.
+playing with genetic algorithm to solve a 2d maze.
 
-## about
+![demo](./docs/assets/demo.gif)
 
-this project aims to evolve a path trough a generated maze by using genetic algorithms.
+(the algorithm is annoyingly unoptimized right now).
+
+## description
+
+this project used a genetic algorithm to solve a 2d maze.
+the maze is generated at runtime and the genetic algorithm is run to find the optimal path through the maze.
+the project uses raylib library for the visual representation of the maze and the algorithm work.
 
 ## build and run
+
+the build requires `cmake`.
 
 ```bash
 cmake -D CMAKE_BUILD_TYPE=Debug -S . -B build/Debug
 cmake --build build/Debug
 ./build/Debug/ga
 ```
+
+## configuration
+
+the parameters of the project can be configured in the `parameters.toml` file.
 
 ## sources
 

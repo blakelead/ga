@@ -22,9 +22,13 @@ int main()
 
   path path = ga.generation(maze);
 
+  bool start = false;
   while (!WindowShouldClose())
   {
-    if (ga.get_current_generation_best() < 1 || IsKeyReleased(KEY_SPACE))
+    if (IsKeyReleased(KEY_S))
+      start = true;
+
+    if (start && (ga.get_current_generation_best() < 1 || IsKeyReleased(KEY_SPACE)))
     {
       path = ga.generation(maze);
     }
