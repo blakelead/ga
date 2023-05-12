@@ -3,11 +3,12 @@ width  = 1200
 height = 800
 
 [maze]
-rows      = 24
-cols      = 24
+rows      = 49
+cols      = 49
+type      = 1 # 0=dfs 1=prim
 
 [genetic]
-population_size = 100
-genome_size     = 100
+population_size = 500
+genome_size     = 5
 crossover_rate  = 0.7
-mutation_rate   = 0.0001
+mutation_rate   = 0.1

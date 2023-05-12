@@ -17,6 +17,7 @@ struct params_data
   {
     int cols;
     int rows;
+    int type;
   } maze;
   struct
   {
@@ -44,6 +45,7 @@ public:
 
     m_data.maze.rows = p["maze"]["rows"].value_or(0);
     m_data.maze.cols = p["maze"]["cols"].value_or(0);
+    m_data.maze.type = p["maze"]["type"].value_or(0);
 
     m_data.genetic.population_size = p["genetic"]["population_size"].value_or(0);
     m_data.genetic.genome_size = p["genetic"]["genome_size"].value_or(0);

@@ -19,6 +19,9 @@ FetchContent_MakeAvailable(toml)
 
 add_executable(${PROJECT_NAME}
   src/main.cpp
+  src/maze/maze_gen.cpp
+  src/maze/maze.cpp
+  src/genetic/ga.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE src)
