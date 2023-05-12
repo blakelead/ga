@@ -17,8 +17,8 @@ maze maze_gen::generate(int rows, int cols, maze_type type)
     prim(maze);
     break;
   }
-  maze.set_start({1, 0});
-  maze.set_end({rows - 2, cols - 1});
+  maze.set_entrance({1, 0});
+  maze.set_exit({rows - 2, cols - 1});
   return maze;
 }
 

@@ -11,39 +11,47 @@ maze::maze(int rows, int cols)
 {
 }
 
+// this method takes a path as input and returns a fitness value for that path.
+// the method goes through each direction in the path, checks if the direction leads to a wall or has been visited before, and increments a penalty in such cases.
+// the fitness value is calculated as the inverse of the distance from the last position to the exit, plus the penalty.
 float maze::test_path(const path &path) const
 {
-  int penalty = 0;
-  position current_position(m_start);
+  float penalty = 0;
+  position current(m_entrance);
   std::unordered_set<int> visited;
+
+  float visited_weight = 1;
+  float wall_weight = 1;
+  float distance_weight = 3;
 
   for (const auto &direction : path.directions)
   {
-    position next_position = current_position + direction;
-    if (visited.find(next_position.row * m_cols + next_position.col) != visited.end())
+    position next = current + direction;
+    if (is_path(next))
     {
-      penalty++;
+      if (visited.find(next.row * m_cols + next.col) != visited.end())
+        penalty += visited_weight;
+      else
+        visited.insert(next.row * m_cols + next.col);
+      current = next;
     }
-    if (is_wall(next_position))
+    else if (is_wall(next))
     {
-      // penalty++;
+      penalty += wall_weight;
     }
-    else if (is_path(next_position))
+    else if (is_exit(next))
     {
-      current_position = next_position;
-      visited.insert(current_position.row * m_cols + current_position.col);
-    }
-    else if (is_end(next_position))
-    {
-      current_position = next_position;
+      current = next;
       break;
     }
   }
 
-  float distance = std::sqrt(std::pow(current_position.row - m_end.row, 2) + std::pow(current_position.col - m_end.col, 2));
-  return 1 / (distance  + penalty + 1);
+  float distance = distance_weight * std::sqrt(std::pow(current.row - m_exit.row, 2) + std::pow(current.col - m_exit.col, 2));
+  return 1.0f / (distance + penalty + 1);
 }
 
+// this method checks if a given position (with an optional offset) is within the maze boundaries.
+// the optional offset is useful for excluding the outer walls in certain cases.
 bool maze::is_within_bounds(const position &pos, int row_offset, int col_offset) const
 {
   return pos.row >= row_offset && pos.row < m_rows - row_offset &&
@@ -60,18 +68,18 @@ void maze::set_wall(const position &pos)
   m_data[pos.row][pos.col] = maze_cell::WALL;
 }
 
-void maze::set_start(const position &pos)
+void maze::set_entrance(const position &pos)
 {
-  m_data[pos.row][pos.col] = maze_cell::START;
-  m_start.row = pos.row;
-  m_start.col = pos.col;
+  m_data[pos.row][pos.col] = maze_cell::ENTRANCE;
+  m_entrance.row = pos.row;
+  m_entrance.col = pos.col;
 }
 
-void maze::set_end(const position &pos)
+void maze::set_exit(const position &pos)
 {
-  m_data[pos.row][pos.col] = maze_cell::END;
-  m_end.row = pos.row;
-  m_end.col = pos.col;
+  m_data[pos.row][pos.col] = maze_cell::EXIT;
+  m_exit.row = pos.row;
+  m_exit.col = pos.col;
 }
 
 bool maze::is_path(const position &pos) const
@@ -84,14 +92,14 @@ bool maze::is_wall(const position &pos) const
   return is_within_bounds(pos) && m_data[pos.row][pos.col] == maze_cell::WALL;
 }
 
-bool maze::is_start(const position &pos) const
+bool maze::is_entrance(const position &pos) const
 {
-  return is_within_bounds(pos) && m_data[pos.row][pos.col] == maze_cell::START;
+  return is_within_bounds(pos) && m_data[pos.row][pos.col] == maze_cell::ENTRANCE;
 }
 
-bool maze::is_end(const position &pos) const
+bool maze::is_exit(const position &pos) const
 {
-  return is_within_bounds(pos) && m_data[pos.row][pos.col] == maze_cell::END;
+  return is_within_bounds(pos) && m_data[pos.row][pos.col] == maze_cell::EXIT;
 }
 
 void maze::draw(int window_width, int window_height) const
@@ -110,13 +118,13 @@ void maze::draw(int window_width, int window_height) const
     for (int col = 0; col < m_cols; col++)
     {
       Color color;
-      if (is_start({row, col}))
+      if (is_entrance({row, col}))
         color = ORANGE;
       else if (is_path({row, col}))
         color = RAYWHITE;
       else if (is_wall({row, col}))
         color = LIGHTGRAY;
-      else if (is_end({row, col}))
+      else if (is_exit({row, col}))
         color = GREEN;
       DrawRectangle(col * cell_size + maze_x,
                     row * cell_size + maze_y,
@@ -136,10 +144,10 @@ void maze::draw_path(int window_width, int window_height, const path &path)
   int maze_x = (window_width - m_cols * cell_size) / 2;
   int maze_y = (window_height - m_rows * cell_size) / 2;
 
-  position current = m_start;
+  position current = m_entrance;
   for (const auto &direction : path.directions)
   {
-    if (is_path(current + direction) || is_end(current + direction))
+    if (is_path(current + direction) || is_exit(current + direction))
     {
       position next = current + direction;
       DrawLineEx({current.col * cell_size + maze_x + (cell_size / 2.0f),
@@ -164,13 +172,13 @@ void maze::print() const
   {
     for (int col = 0; col < m_cols; col++)
     {
-      if (is_start({row, col}))
+      if (is_entrance({row, col}))
         printf("X");
       else if (is_path({row, col}))
         printf(" ");
       else if (is_wall({row, col}))
         printf("#");
-      else if (is_end({row, col}))
+      else if (is_exit({row, col}))
         printf("O");
     }
     printf("\n");

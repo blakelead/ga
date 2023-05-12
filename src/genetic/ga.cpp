@@ -57,8 +57,8 @@ int ga::get_curent_generation()
 const genome &ga::select()
 {
   // only select the best first quarter of the genomes
-  const genome &genome1 = m_genomes[rand() % (m_genomes.size() / 2)];
-  const genome &genome2 = m_genomes[rand() % (m_genomes.size() / 2)];
+  const genome &genome1 = m_genomes[rand() % (m_genomes.size() / 4)];
+  const genome &genome2 = m_genomes[rand() % (m_genomes.size() / 4)];
 
   return genome1 > genome2 ? genome1 : genome2;
 }

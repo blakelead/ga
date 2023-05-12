@@ -4,13 +4,13 @@ playing with genetic algorithm to solve a 2d maze.
 
 ![demo](./docs/assets/demo.gif)
 
-(the algorithm is annoyingly unoptimized right now).
-
 ## description
 
 this project used a genetic algorithm to solve a 2d maze.
 the maze is generated at runtime and the genetic algorithm is run to find the optimal path through the maze.
 the project uses raylib library for the visual representation of the maze and the algorithm work.
+
+the current implementation of the genetic algorithm is quite basic and not well optimized. solving the maze may take a long time especially for larger mazes and can even fail to do so. i plan on working on that once i gain more knowlege about this subject.
 
 ## build and run
 
