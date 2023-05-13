@@ -24,8 +24,8 @@ public:
   bool is_wall(const position &pos) const;
   bool is_entrance(const position &pos) const;
   bool is_exit(const position &pos) const;
-  void draw(int window_width, int window_height) const;
-  void draw_path(int window_width, int window_height, const path &path);
+  void draw(int window_width, int window_height, int offset_x, int offset_y) const;
+  void draw_path(int window_width, int window_height, int offset_x, int offset_y, const path &path);
   void print() const;
 
 private:

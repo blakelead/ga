@@ -14,6 +14,16 @@ ga::ga(int population_size, int genome_size, float crossover_rate, float mutatio
   }
 }
 
+void ga::reset()
+{
+  m_genomes.clear();
+  m_generation = 0;
+  for (int i = 0; i < m_population_size; i++)
+  {
+    m_genomes.push_back(genome(m_genome_size * m_gene_size));
+  }
+}
+
 path ga::generation(const maze &maze)
 {
   // compute fitness for all genomes
@@ -84,13 +94,6 @@ void ga::mutate(genome &genome)
       genome.data[i] = (rand() % 2);
     }
   }
-  // // deletion mutation
-  // float dr = (float)(rand()) / (float)(RAND_MAX);
-  // if (dr < m_mutation_rate)
-  // {
-  //   int index = rand() % genome.size() - 1;
-  //   genome.data.erase(genome.data.begin() + index, genome.data.begin() + index + 1);
-  // }
   // insertion mutation
   float ir = (float)(rand()) / (float)(RAND_MAX);
   if (ir < m_mutation_rate)
@@ -101,6 +104,13 @@ void ga::mutate(genome &genome)
     genome.data.insert(genome.data.begin() + index, bit1);
     genome.data.insert(genome.data.begin() + index, bit2);
   }
+  // // deletion mutation
+  // float dr = (float)(rand()) / (float)(RAND_MAX);
+  // if (dr < m_mutation_rate)
+  // {
+  //   int index = rand() % genome.size() - 2;
+  //   genome.data.erase(genome.data.begin() + index, genome.data.begin() + index + 1);
+  // }
 }
 
 path ga::decode(const genome &genome) const

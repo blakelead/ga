@@ -7,6 +7,8 @@ struct genome
   std::vector<int> data;
   float fitness;
 
+  genome() : fitness(0) {}
+
   genome(int size) : fitness(0)
   {
     for (int i = 0; i < size; i++)
@@ -15,7 +17,17 @@ struct genome
     }
   }
 
-  genome() : fitness(0) {}
+  genome(const genome &other) : data(other.data), fitness(other.fitness) {}
+
+  genome &operator=(const genome &other)
+  {
+    if (this != &other)
+    {
+      this->data = other.data;
+      this->fitness = other.fitness;
+    }
+    return *this;
+  }
 
   bool operator<(const genome &other) const
   {

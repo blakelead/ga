@@ -102,7 +102,7 @@ bool maze::is_exit(const position &pos) const
   return is_within_bounds(pos) && m_data[pos.row][pos.col] == maze_cell::EXIT;
 }
 
-void maze::draw(int window_width, int window_height) const
+void maze::draw(int window_width, int window_height, int offset_x, int offset_y) const
 {
   // calculate cell size from window and maze sizes
   int cell_width = window_width / m_cols;
@@ -110,8 +110,8 @@ void maze::draw(int window_width, int window_height) const
   int cell_size = std::min(cell_width, cell_height);
 
   // calculate the starting coordinate of the maze
-  int maze_x = (window_width - m_cols * cell_size) / 2;
-  int maze_y = (window_height - m_rows * cell_size) / 2;
+  int maze_x = (window_width - m_cols * cell_size) / 2 + offset_x;
+  int maze_y = (window_height - m_rows * cell_size) / 2 + offset_y;
 
   for (int row = 0; row < m_rows; row++)
   {
@@ -133,7 +133,7 @@ void maze::draw(int window_width, int window_height) const
   }
 }
 
-void maze::draw_path(int window_width, int window_height, const path &path)
+void maze::draw_path(int window_width, int window_height, int offset_x, int offset_y, const path &path)
 {
   // calculate cell size from window and maze sizes
   int cell_width = window_width / m_cols;
@@ -141,8 +141,8 @@ void maze::draw_path(int window_width, int window_height, const path &path)
   int cell_size = std::min(cell_width, cell_height);
 
   // calculate the starting coordinate of the maze
-  int maze_x = (window_width - m_cols * cell_size) / 2;
-  int maze_y = (window_height - m_rows * cell_size) / 2;
+  int maze_x = (window_width - m_cols * cell_size) / 2 + offset_x;
+  int maze_y = (window_height - m_rows * cell_size) / 2 + offset_y;
 
   position current = m_entrance;
   for (const auto &direction : path.directions)

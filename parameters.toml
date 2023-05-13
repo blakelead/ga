@@ -1,14 +1,14 @@
 [window]
-width = 1200
-height = 800
+width = 800
+height = 600
 
 [maze]
-rows = 19
-cols = 19
+rows = 15 # must be an odd number
+cols = 15 # must be an odd number
 type = 1  # generation algorithm: 0=dfs, 1=prim
 
 [genetic]
 population_size = 500
-genome_size = 1
+genome_size = 20
 crossover_rate = 0.7
 mutation_rate = 0.1

@@ -7,6 +7,8 @@ class ga
 {
 public:
   ga(int population_size, int genome_size, float crossover_rate, float mutation_rate);
+  
+  void reset();
   path generation(const maze &maze);
   float get_current_generation_best();
   int get_curent_generation();
