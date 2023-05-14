@@ -1,6 +1,7 @@
 #pragma once
 
 #include "maze/path.hpp"
+#include <raylib.h>
 
 enum class maze_cell
 {
@@ -25,8 +26,7 @@ public:
   bool is_entrance(const position &pos) const;
   bool is_exit(const position &pos) const;
   void draw(int window_width, int window_height, int offset_x, int offset_y) const;
-  void draw_path(int window_width, int window_height, int offset_x, int offset_y, const path &path);
-  void print() const;
+  void draw_path(int window_width, int window_height, int offset_x, int offset_y, const path &path, Color color);
 
 private:
   std::vector<std::vector<maze_cell>> m_data;

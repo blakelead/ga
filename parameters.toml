@@ -3,8 +3,8 @@ width = 800
 height = 600
 
 [maze]
-rows = 15 # must be an odd number
-cols = 15 # must be an odd number
+rows = 11 # must be an odd number
+cols = 11 # must be an odd number
 type = 0  # generation algorithm: 0=dfs, 1=prim
 
 [genetic]

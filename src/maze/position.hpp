@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 struct position
 {
   int row;

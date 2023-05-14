@@ -46,7 +46,7 @@ int main()
     {
       ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
 
-      // GUI
+      // TODO: write a proper GUI manager
       {
         GuiGroupBox((Rectangle){anchor_maze.x, anchor_maze.y, 584, 584}, "MAZE");
 
@@ -92,7 +92,7 @@ int main()
       }
 
       maze.draw(568, 568, 16, 16);
-      maze.draw_path(568, 568, 16, 16, path);
+      maze.draw_path(568, 568, 16, 16, path, ga.get_current_generation_best() < 1 ? RED : BLUE);
     }
     EndDrawing();
   }

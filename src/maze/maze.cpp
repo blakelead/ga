@@ -1,7 +1,5 @@
 #include "maze/maze.hpp"
 #include "maze/position.hpp"
-#include "raylib.h"
-#include "spdlog/spdlog.h"
 #include <cmath>
 #include <unordered_set>
 
@@ -134,7 +132,7 @@ void maze::draw(int window_width, int window_height, int offset_x, int offset_y)
   }
 }
 
-void maze::draw_path(int window_width, int window_height, int offset_x, int offset_y, const path &path)
+void maze::draw_path(int window_width, int window_height, int offset_x, int offset_y, const path &path, Color color)
 {
   // calculate cell size from window and maze sizes
   int cell_width = window_width / m_cols;
@@ -156,13 +154,13 @@ void maze::draw_path(int window_width, int window_height, int offset_x, int offs
                   current.row * cell_size + maze_y + (cell_size / 2.0f)},
                  {next.col * cell_size + maze_x + (cell_size / 2.0f),
                   next.row * cell_size + maze_y + (cell_size / 2.0f)},
-                 line_size, RED);
+                 line_size, color);
       DrawCircle(current.col * cell_size + maze_x + (cell_size / 2.0f),
                  current.row * cell_size + maze_y + (cell_size / 2.0f),
-                 line_size, RED);
+                 line_size, color);
       DrawCircle(next.col * cell_size + maze_x + (cell_size / 2.0f),
                  next.row * cell_size + maze_y + (cell_size / 2.0f),
-                 line_size, RED);
+                 line_size, color);
       current = next;
     }
   }
