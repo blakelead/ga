@@ -57,9 +57,9 @@ int main()
           ga.reset(population_size, genome_size, crossover_rate, mutation_rate);
           path.directions.clear();
         }
-        if (GuiButton((Rectangle){anchor_actions.x + 12, anchor_actions.y + 40, 168, 24}, "STOP"))
+        if (GuiButton((Rectangle){anchor_actions.x + 12, anchor_actions.y + 40, 168, 24}, run_ga ? "STOP" : "START"))
         {
-          run_ga = false;
+          run_ga = !run_ga;
         }
         if (GuiButton((Rectangle){anchor_actions.x + 12, anchor_actions.y + 72, 168, 24}, "NEW MAZE"))
         {
