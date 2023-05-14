@@ -79,8 +79,8 @@ std::vector<path> ga::get_all_paths()
 const genome &ga::select()
 {
   // only select the best third of the genomes and return the more fit
-  const genome &genome1 = m_genomes[rand() % (m_genomes.size() / 3)];
-  const genome &genome2 = m_genomes[rand() % (m_genomes.size() / 3)];
+  const genome &genome1 = m_genomes[rand() % (m_genomes.size() / 2)];
+  const genome &genome2 = m_genomes[rand() % (m_genomes.size() / 2)];
   return genome1 > genome2 ? genome1 : genome2;
 }
 

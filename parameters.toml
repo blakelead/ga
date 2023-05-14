@@ -1,7 +1,7 @@
 [maze]
-rows = 16
-cols = 16
-type = 1  # generation algorithm: 0=dfs, 1=prim
+rows = 10
+cols = 10
+type = 0  # generation algorithm: 0=dfs, 1=prim
 
 [genetic]
 population_size = 500
