@@ -70,20 +70,27 @@ int ga::get_curent_generation()
 
 const genome &ga::select()
 {
-  // only select the best first quarter of the genomes
-  const genome &genome1 = m_genomes[rand() % (m_genomes.size() / 4)];
-  const genome &genome2 = m_genomes[rand() % (m_genomes.size() / 4)];
-
+  // only select the best third of the genomes and return the more fit
+  const genome &genome1 = m_genomes[rand() % (m_genomes.size() / 3)];
+  const genome &genome2 = m_genomes[rand() % (m_genomes.size() / 3)];
   return genome1 > genome2 ? genome1 : genome2;
 }
 
 genome ga::crossover(const genome &parent1, const genome &parent2)
 {
-  // one point crossover for now
-  int crossover_point = rand() % std::min(parent1.size(), parent2.size());
   genome child;
-  child.data.insert(child.data.end(), parent1.data.begin(), parent1.data.begin() + crossover_point);
-  child.data.insert(child.data.end(), parent2.data.begin() + crossover_point, parent2.data.end());
+  float r = (float)(rand()) / (float)(RAND_MAX);
+  if (r < m_crossover_rate)
+  {
+    // one point crossover for now
+    int crossover_point = rand() % std::min(parent1.size(), parent2.size());
+    child.data.insert(child.data.end(), parent1.data.begin(), parent1.data.begin() + crossover_point);
+    child.data.insert(child.data.end(), parent2.data.begin() + crossover_point, parent2.data.end());
+  }
+  else
+  {
+    child = parent1;
+  }
   return child;
 }
 

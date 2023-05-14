@@ -25,12 +25,14 @@ int main()
   float mutation_rate = p.genetic.mutation_rate;
   int population_size = p.genetic.population_size;
   int genome_size = p.genetic.genome_size;
+  int maze_rows = p.maze.rows % 2 == 0 ? p.maze.rows + 1 : p.maze.rows;
+  int maze_cols = p.maze.cols % 2 == 0 ? p.maze.cols + 1 : p.maze.cols;
 
   InitWindow(p.window.width, p.window.height, "ga");
   SetTargetFPS(30);
 
   maze_gen mg;
-  auto maze = mg.generate(p.maze.rows, p.maze.cols, (maze_type)p.maze.type);
+  auto maze = mg.generate(maze_rows, maze_cols, (maze_type)p.maze.type);
   ga ga(population_size, genome_size, crossover_rate, mutation_rate);
   path path;
 
@@ -64,7 +66,7 @@ int main()
           run_ga = false;
           ga.reset(population_size, genome_size, crossover_rate, mutation_rate);
           path.directions.clear();
-          maze = mg.generate(p.maze.rows, p.maze.cols, (maze_type)p.maze.type);
+          maze = mg.generate(maze_rows, maze_cols, (maze_type)p.maze.type);
         }
 
         GuiGroupBox((Rectangle){anchor_params.x, anchor_params.y, 192, 136}, "PARAMETERS");
@@ -74,7 +76,7 @@ int main()
         const char *genome = TextFormat("%d", genome_size);
         crossover_rate = GuiSliderPro((Rectangle){anchor_params.x + 34, anchor_params.y + 8, 124, 24}, "C.O.", crossover, crossover_rate, 0, 1, 24);
         mutation_rate = GuiSliderPro((Rectangle){anchor_params.x + 34, anchor_params.y + 40, 124, 24}, "MUT.", mutation, mutation_rate, 0, 1, 24);
-        population_size = GuiSliderPro((Rectangle){anchor_params.x + 34, anchor_params.y + 72, 124, 24}, "POP.", population, population_size, 10, 1000, 24);
+        population_size = GuiSliderPro((Rectangle){anchor_params.x + 34, anchor_params.y + 72, 124, 24}, "POP.", population, population_size, 10, 5000, 24);
         genome_size = GuiSliderPro((Rectangle){anchor_params.x + 34, anchor_params.y + 104, 124, 24}, "GEN.", genome, genome_size, 1, 500, 24);
 
         GuiGroupBox((Rectangle){anchor_data.x, anchor_data.y, 192, 104}, "DATA");

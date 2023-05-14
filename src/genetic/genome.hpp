@@ -17,18 +17,6 @@ struct genome
     }
   }
 
-  genome(const genome &other) : data(other.data), fitness(other.fitness) {}
-
-  genome &operator=(const genome &other)
-  {
-    if (this != &other)
-    {
-      this->data = other.data;
-      this->fitness = other.fitness;
-    }
-    return *this;
-  }
-
   bool operator<(const genome &other) const
   {
     return fitness < other.fitness;

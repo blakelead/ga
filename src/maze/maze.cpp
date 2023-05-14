@@ -20,9 +20,10 @@ float maze::test_path(const path &path) const
   position current(m_entrance);
   std::unordered_set<int> visited;
 
-  float visited_weight = 3;
-  float wall_weight = 3;
-  float distance_weight = 4;
+  // should be added to parameters
+  float visited_weight = 0;
+  float wall_weight = 0;
+  float distance_weight = 1;
 
   for (const auto &direction : path.directions)
   {

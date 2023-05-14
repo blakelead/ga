@@ -3,9 +3,9 @@ width = 800
 height = 600
 
 [maze]
-rows = 9 # must be an odd number
-cols = 9 # must be an odd number
-type = 0 # generation algorithm: 0=dfs, 1=prim
+rows = 15 # must be an odd number
+cols = 15 # must be an odd number
+type = 0  # generation algorithm: 0=dfs, 1=prim
 
 [genetic]
 population_size = 500
