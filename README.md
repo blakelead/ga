@@ -1,20 +1,28 @@
 # ga
 
-playing with genetic algorithms to solve a 2d maze.
+exploring the use of genetic algorithms to solve a 2d maze.
 
 ![demo](./docs/assets/demo.gif)
 
 ## description
 
-this project uses a genetic algorithm to solve a 2d maze.
-the maze is generated at runtime and the genetic algorithm is run to find the optimal path through the maze.
-the project uses raylib library for the visual representation of the maze and the algorithm work.
+this project uses a genetic algorithm to navigate through a 2d maze. the maze is generated at runtime, and the genetic algorithm is applied to find the optimal path. the project uses the raylib library for the visual representation of the maze and the gui.
 
-the current implementation of the genetic algorithm is quite basic and not well optimized. solving the maze may take a long time especially for larger mazes and can even fail to do so. i plan on working on that once i gain more knowlege about this subject.
+if you're interested in learning more about the genetic algorithm, here's a brief explanation:
+
+- initially, the genetic algorithm creates a population of random genomes. a genome is a sequence of directions (up, right, down, left) that represents a path through the maze.
+- the fitness of each genome is evaluated based on how close it gets to the exit of the maze.
+- two parents are selected for reproduction from the fittest portion of the population.
+- a child is produced from the two parents, with a chance of crossover. if a crossover occurs, the child inherits a part of the path from each parent.
+- the child is then subjected to mutation with a certain probability. this mutation either alters some directions in the child's path or inserts new directions at random positions.
+- these steps are repeated until a new generation is created from the parent generation.
+- the algorithm continues from generation to generation until a genome reaches the maximum fitness of 1.
+
+please note: the current implementation of the genetic algorithm is quite basic and not optimized. solving the maze, particularly larger ones, may take some time and may even fail. i plan to work on these aspects as i learn more about the subject.
 
 ## build and run
 
-the build requires `cmake`.
+building the project requires `cmake`.
 
 ```bash
 cmake -D CMAKE_BUILD_TYPE=Debug -S . -B build/Debug
@@ -24,7 +32,7 @@ cmake --build build/Debug
 
 ## configuration
 
-the parameters of the project can be configured in the `parameters.toml` file.
+project parameters can be adjusted in the `parameters.toml` file.
 
 ## sources
 
