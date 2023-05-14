@@ -10,11 +10,6 @@ struct params_data
 {
   struct
   {
-    int width;
-    int height;
-  } window;
-  struct
-  {
     int cols;
     int rows;
     int type;
@@ -40,8 +35,6 @@ public:
   void load(const char *file)
   {
     auto p = toml::parse_file(file);
-    m_data.window.width = p["window"]["width"].value_or(0);
-    m_data.window.height = p["window"]["height"].value_or(0);
 
     m_data.maze.rows = p["maze"]["rows"].value_or(0);
     m_data.maze.cols = p["maze"]["cols"].value_or(0);

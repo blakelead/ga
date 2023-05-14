@@ -1,10 +1,6 @@
-[window]
-width = 800
-height = 600
-
 [maze]
-rows = 13 # must be an odd number
-cols = 13 # must be an odd number
+rows = 20 # must be an odd number
+cols = 20 # must be an odd number
 type = 0  # generation algorithm: 0=dfs, 1=prim
 
 [genetic]

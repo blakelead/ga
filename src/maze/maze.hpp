@@ -25,8 +25,8 @@ public:
   bool is_wall(const position &pos) const;
   bool is_entrance(const position &pos) const;
   bool is_exit(const position &pos) const;
-  void draw(int window_width, int window_height, int offset_x, int offset_y) const;
-  void draw_path(int window_width, int window_height, int offset_x, int offset_y, const path &path, Color color);
+  void draw(int width, int height, int offset_x, int offset_y) const;
+  void draw_path(int width, int height, int offset_x, int offset_y, const path &path, Color color);
 
 private:
   std::vector<std::vector<maze_cell>> m_data;

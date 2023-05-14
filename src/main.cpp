@@ -28,7 +28,7 @@ int main()
   int maze_rows = p.maze.rows % 2 == 0 ? p.maze.rows + 1 : p.maze.rows;
   int maze_cols = p.maze.cols % 2 == 0 ? p.maze.cols + 1 : p.maze.cols;
 
-  InitWindow(p.window.width, p.window.height, "ga");
+  InitWindow(800, 600, "ga");
   SetTargetFPS(30);
 
   maze_gen mg;
