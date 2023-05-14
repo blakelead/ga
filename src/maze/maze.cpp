@@ -20,9 +20,9 @@ float maze::test_path(const path &path) const
   position current(m_entrance);
   std::unordered_set<int> visited;
 
-  float visited_weight = 1;
-  float wall_weight = 1;
-  float distance_weight = 3;
+  float visited_weight = 3;
+  float wall_weight = 3;
+  float distance_weight = 4;
 
   for (const auto &direction : path.directions)
   {
@@ -139,6 +139,7 @@ void maze::draw_path(int window_width, int window_height, int offset_x, int offs
   int cell_width = window_width / m_cols;
   int cell_height = window_height / m_rows;
   int cell_size = std::min(cell_width, cell_height);
+  float line_size = std::max(1, cell_size / 8);
 
   // calculate the starting coordinate of the maze
   int maze_x = (window_width - m_cols * cell_size) / 2 + offset_x;
@@ -154,13 +155,13 @@ void maze::draw_path(int window_width, int window_height, int offset_x, int offs
                   current.row * cell_size + maze_y + (cell_size / 2.0f)},
                  {next.col * cell_size + maze_x + (cell_size / 2.0f),
                   next.row * cell_size + maze_y + (cell_size / 2.0f)},
-                 3, RED);
+                 line_size, RED);
       DrawCircle(current.col * cell_size + maze_x + (cell_size / 2.0f),
                  current.row * cell_size + maze_y + (cell_size / 2.0f),
-                 3, RED);
+                 line_size, RED);
       DrawCircle(next.col * cell_size + maze_x + (cell_size / 2.0f),
                  next.row * cell_size + maze_y + (cell_size / 2.0f),
-                 3, RED);
+                 line_size, RED);
       current = next;
     }
   }

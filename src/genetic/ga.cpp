@@ -14,8 +14,12 @@ ga::ga(int population_size, int genome_size, float crossover_rate, float mutatio
   }
 }
 
-void ga::reset()
+void ga::reset(int population_size, int genome_size, float crossover_rate, float mutation_rate)
 {
+  m_population_size = population_size;
+  m_genome_size = genome_size;
+  m_crossover_rate = crossover_rate;
+  m_mutation_rate = mutation_rate;
   m_genomes.clear();
   m_generation = 0;
   for (int i = 0; i < m_population_size; i++)
