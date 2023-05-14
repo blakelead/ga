@@ -7,7 +7,6 @@ struct position
   int col;
 
   position(int row = 0, int col = 0) : row(row), col(col) {}
-  position(const position &pos) : row(pos.row), col(pos.col) {}
 
   position operator+(const position &other) const
   {
@@ -40,10 +39,4 @@ struct position
   {
     return !(*this == other);
   }
-
-  void print()
-  {
-    std::cout << "[" << row << "," << col << "]\n";
-  }
 };
-

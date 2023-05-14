@@ -20,7 +20,7 @@ float maze::test_path(const path &path) const
   position current(m_entrance);
   std::unordered_set<int> visited;
 
-  // should be added to parameters
+  // TODO: add to global parameters
   float visited_weight = 0;
   float wall_weight = 0;
   float distance_weight = 1;
@@ -166,24 +166,4 @@ void maze::draw_path(int window_width, int window_height, int offset_x, int offs
       current = next;
     }
   }
-}
-
-void maze::print() const
-{
-  for (int row = 0; row < m_rows; row++)
-  {
-    for (int col = 0; col < m_cols; col++)
-    {
-      if (is_entrance({row, col}))
-        printf("X");
-      else if (is_path({row, col}))
-        printf(" ");
-      else if (is_wall({row, col}))
-        printf("#");
-      else if (is_exit({row, col}))
-        printf("O");
-    }
-    printf("\n");
-  }
-  printf("\n");
 }

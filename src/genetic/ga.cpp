@@ -89,6 +89,7 @@ genome ga::crossover(const genome &parent1, const genome &parent2)
   }
   else
   {
+    // TODO: find a best way to handle this case
     child = parent1;
   }
   return child;
@@ -115,7 +116,7 @@ void ga::mutate(genome &genome)
     genome.data.insert(genome.data.begin() + index, bit1);
     genome.data.insert(genome.data.begin() + index, bit2);
   }
-  // // deletion mutation
+  // TODO: deletion mutation
   // float dr = (float)(rand()) / (float)(RAND_MAX);
   // if (dr < m_mutation_rate)
   // {
