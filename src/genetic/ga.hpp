@@ -12,6 +12,7 @@ public:
   path generation(const maze &maze);
   float get_current_generation_best();
   int get_curent_generation();
+  std::vector<path> get_all_paths();
 
 private:
   const genome &select();

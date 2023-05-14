@@ -27,6 +27,7 @@ public:
   bool is_exit(const position &pos) const;
   void draw(int width, int height, int offset_x, int offset_y) const;
   void draw_path(int width, int height, int offset_x, int offset_y, const path &path, Color color);
+  void draw_all_paths(int width, int height, int offset_x, int offset_y, std::vector<path> all_paths, Color color);
 
 private:
   std::vector<std::vector<maze_cell>> m_data;

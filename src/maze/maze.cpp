@@ -1,4 +1,5 @@
 #include "maze/maze.hpp"
+#include "maze.hpp"
 #include "maze/position.hpp"
 #include <cmath>
 #include <unordered_set>
@@ -164,4 +165,10 @@ void maze::draw_path(int width, int height, int offset_x, int offset_y, const pa
       current = next;
     }
   }
+}
+
+void maze::draw_all_paths(int width, int height, int offset_x, int offset_y, std::vector<path> all_paths, Color color)
+{
+  for (const auto path : all_paths)
+    draw_path(width, height, offset_x, offset_y, path, color);
 }

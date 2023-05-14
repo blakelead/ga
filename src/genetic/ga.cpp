@@ -68,6 +68,14 @@ int ga::get_curent_generation()
   return m_generation;
 }
 
+std::vector<path> ga::get_all_paths()
+{
+  std::vector<path> all_paths;
+  for (int i = 0; i < m_genomes.size() / 4; i++)
+    all_paths.push_back(decode(m_genomes[i]));
+  return all_paths;
+}
+
 const genome &ga::select()
 {
   // only select the best third of the genomes and return the more fit
@@ -111,10 +119,8 @@ void ga::mutate(genome &genome)
   if (ir < m_mutation_rate)
   {
     int index = rand() % genome.size();
-    int bit1 = rand() % 2;
-    int bit2 = rand() % 2;
-    genome.data.insert(genome.data.begin() + index, bit1);
-    genome.data.insert(genome.data.begin() + index, bit2);
+    genome.data.insert(genome.data.begin() + index, rand() % 2);
+    genome.data.insert(genome.data.begin() + index, rand() % 2);
   }
   // TODO: deletion mutation
   // float dr = (float)(rand()) / (float)(RAND_MAX);

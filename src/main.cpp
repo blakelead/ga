@@ -34,13 +34,15 @@ int main()
   maze_gen mg;
   auto maze = mg.generate(maze_rows, maze_cols, (maze_type)p.maze.type);
   ga ga(population_size, genome_size, crossover_rate, mutation_rate);
-  path path;
+  path best_path;
+  std::vector<path> all_paths;
 
   while (!WindowShouldClose())
   {
     if (run_ga && ga.get_current_generation_best() < 1)
     {
-      path = ga.generation(maze);
+      best_path = ga.generation(maze);
+      all_paths = ga.get_all_paths();
     }
     BeginDrawing();
     {
@@ -55,7 +57,8 @@ int main()
         {
           run_ga = true;
           ga.reset(population_size, genome_size, crossover_rate, mutation_rate);
-          path.directions.clear();
+          best_path.directions.clear();
+          all_paths.clear();
         }
         if (GuiButton((Rectangle){anchor_actions.x + 12, anchor_actions.y + 40, 168, 24}, run_ga ? "STOP" : "START"))
         {
@@ -65,7 +68,8 @@ int main()
         {
           run_ga = false;
           ga.reset(population_size, genome_size, crossover_rate, mutation_rate);
-          path.directions.clear();
+          best_path.directions.clear();
+          all_paths.clear();
           maze = mg.generate(maze_rows, maze_cols, (maze_type)p.maze.type);
         }
 
@@ -86,13 +90,17 @@ int main()
         const char *fitness = TextFormat("%f", ga.get_current_generation_best());
         GuiLabel((Rectangle){anchor_data.x + 8, anchor_data.y + 40, 120, 24}, "FITNESS");
         GuiTextBox((Rectangle){anchor_data.x + 84, anchor_data.y + 40, 100, 24}, const_cast<char *>(fitness), 128, false);
-        const char *genome_size = TextFormat("%d", path.directions.size());
+        const char *genome_size = TextFormat("%d", best_path.directions.size());
         GuiLabel((Rectangle){anchor_data.x + 8, anchor_data.y + 72, 120, 24}, "GENOME SIZE");
         GuiTextBox((Rectangle){anchor_data.x + 84, anchor_data.y + 72, 100, 24}, const_cast<char *>(genome_size), 128, false);
       }
 
       maze.draw(568, 568, 16, 16);
-      maze.draw_path(568, 568, 16, 16, path, ga.get_current_generation_best() < 1 ? RED : BLUE);
+      if (run_ga && ga.get_current_generation_best() < 1)
+      {
+        maze.draw_all_paths(568, 568, 16, 16, all_paths, ColorAlpha(MAGENTA, 0.01));
+      }
+      maze.draw_path(568, 568, 16, 16, best_path, ga.get_current_generation_best() < 1 ? RED : BLUE);
     }
     EndDrawing();
   }
