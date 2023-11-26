@@ -11,16 +11,9 @@ int main()
   srand(time(nullptr));
   spdlog::set_level(spdlog::level::debug);
 
-  // GUI
-  Vector2 anchor_maze = {8, 8};
-  Vector2 anchor_actions = {600, 8};
-  Vector2 anchor_params = {600, 120};
-  Vector2 anchor_data = {600, 264};
-  bool run_ga = false;
-
+  // load parameters from file
   params::instance().load("parameters.toml");
   auto p = params::instance().get();
-
   float crossover_rate = p.genetic.crossover_rate;
   float mutation_rate = p.genetic.mutation_rate;
   int population_size = p.genetic.population_size;
@@ -28,14 +21,23 @@ int main()
   int maze_rows = p.maze.rows % 2 == 0 ? p.maze.rows + 1 : p.maze.rows;
   int maze_cols = p.maze.cols % 2 == 0 ? p.maze.cols + 1 : p.maze.cols;
 
-  InitWindow(800, 600, "ga");
-  SetTargetFPS(30);
-
   maze_gen mg;
   auto maze = mg.generate(maze_rows, maze_cols, (maze_type)p.maze.type);
+  maze.compute_grid_score();
+
   ga ga(population_size, genome_size, crossover_rate, mutation_rate);
   path best_path;
   std::vector<path> all_paths;
+
+  // GUI
+  Vector2 anchor_maze = {8, 8};
+  Vector2 anchor_actions = {600, 8};
+  Vector2 anchor_params = {600, 120};
+  Vector2 anchor_data = {600, 264};
+  bool run_ga = false;
+
+  InitWindow(800, 600, "ga");
+  SetTargetFPS(15);
 
   while (!WindowShouldClose())
   {
@@ -71,6 +73,7 @@ int main()
           best_path.directions.clear();
           all_paths.clear();
           maze = mg.generate(maze_rows, maze_cols, (maze_type)p.maze.type);
+          maze.compute_grid_score();
         }
 
         GuiGroupBox((Rectangle){anchor_params.x, anchor_params.y, 192, 136}, "PARAMETERS");
@@ -98,7 +101,7 @@ int main()
       maze.draw(568, 568, 16, 16);
       if (run_ga && ga.get_current_generation_best() < 1)
       {
-        maze.draw_all_paths(568, 568, 16, 16, all_paths, ColorAlpha(MAGENTA, 0.01));
+        maze.draw_all_paths(568, 568, 16, 16, all_paths, ColorAlpha(RED, 0.1));
       }
       maze.draw_path(568, 568, 16, 16, best_path, ga.get_current_generation_best() < 1 ? RED : BLUE);
     }

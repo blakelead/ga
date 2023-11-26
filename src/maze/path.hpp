@@ -6,4 +6,8 @@
 struct path
 {
   std::vector<position> directions;
+  int size() const
+  {
+    return directions.size();
+  }
 };

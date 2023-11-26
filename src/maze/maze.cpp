@@ -2,12 +2,36 @@
 #include "maze.hpp"
 #include "maze/position.hpp"
 #include <cmath>
+#include <queue>
 #include <unordered_set>
 
 maze::maze(int rows, int cols)
     : m_rows(rows), m_cols(cols),
-      m_data(rows, std::vector<maze_cell>(cols, maze_cell::WALL))
+      m_data(rows, std::vector<maze_cell>(cols, maze_cell::WALL)),
+      m_grid_score(rows, std::vector<int>(cols, INT_MAX))
 {
+}
+
+void maze::compute_grid_score()
+{
+  m_grid_score[m_exit.row][m_exit.col] = 0;
+  std::queue<position> queue;
+  queue.push(m_exit);
+  std::vector<position> directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}}; // UP, RIGHT, DOWN, LEFT
+  while (!queue.empty())
+  {
+    position current = queue.front();
+    queue.pop();
+    for (const auto &direction : directions)
+    {
+      position next = current + direction;
+      if (is_path(next) && m_grid_score[current.row][current.col] + 1 < m_grid_score[next.row][next.col])
+      {
+        m_grid_score[next.row][next.col] = m_grid_score[current.row][current.col] + 1;
+        queue.push(next);
+      }
+    }
+  }
 }
 
 // this method takes a path as input and returns a fitness value for that path.
@@ -15,29 +39,14 @@ maze::maze(int rows, int cols)
 // the fitness value is calculated as the inverse of the distance from the last position to the exit, plus the penalty.
 float maze::test_path(const path &path) const
 {
-  float penalty = 0;
   position current(m_entrance);
-  std::unordered_set<int> visited;
-
-  // TODO: add to global parameters
-  float visited_weight = 0;
-  float wall_weight = 0;
-  float distance_weight = 1;
 
   for (const auto &direction : path.directions)
   {
     position next = current + direction;
     if (is_path(next))
     {
-      if (visited.find(next.row * m_cols + next.col) != visited.end())
-        penalty += visited_weight;
-      else
-        visited.insert(next.row * m_cols + next.col);
       current = next;
-    }
-    else if (is_wall(next))
-    {
-      penalty += wall_weight;
     }
     else if (is_exit(next))
     {
@@ -45,9 +54,8 @@ float maze::test_path(const path &path) const
       break;
     }
   }
-
-  float distance = distance_weight * std::sqrt(std::pow(current.row - m_exit.row, 2) + std::pow(current.col - m_exit.col, 2));
-  return 1.0f / (distance + penalty + 1);
+  int distance_to_exit = m_grid_score[current.row][current.col];
+  return 1.0f / (distance_to_exit + 1.0f);
 }
 
 // this method checks if a given position (with an optional offset) is within the maze boundaries.
@@ -92,6 +100,18 @@ bool maze::is_wall(const position &pos) const
   return is_within_bounds(pos) && m_data[pos.row][pos.col] == maze_cell::WALL;
 }
 
+bool maze::is_dead_end(const position &pos) const
+{
+  int dead_ends = 0;
+  std::vector<position> directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}}; // UP, RIGHT, DOWN, LEFT
+  for (const auto &direction : directions)
+  {
+    if (is_wall(pos + direction))
+      dead_ends++;
+  }
+  return dead_ends == 3;
+}
+
 bool maze::is_entrance(const position &pos) const
 {
   return is_within_bounds(pos) && m_data[pos.row][pos.col] == maze_cell::ENTRANCE;
@@ -126,9 +146,7 @@ void maze::draw(int width, int height, int offset_x, int offset_y) const
         color = LIGHTGRAY;
       else if (is_exit({row, col}))
         color = GREEN;
-      DrawRectangle(col * cell_size + maze_x,
-                    row * cell_size + maze_y,
-                    cell_size, cell_size, color);
+      DrawRectangle(col * cell_size + maze_x, row * cell_size + maze_y, cell_size, cell_size, color);
     }
   }
 }

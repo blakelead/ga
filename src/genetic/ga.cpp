@@ -2,6 +2,7 @@
 #include "maze/maze.hpp"
 #include "spdlog/spdlog.h"
 #include <algorithm>
+#include <cmath>
 #include <functional>
 
 ga::ga(int population_size, int genome_size, float crossover_rate, float mutation_rate)
@@ -70,8 +71,9 @@ int ga::get_curent_generation()
 
 std::vector<path> ga::get_all_paths()
 {
+  int index = std::min(10, (int)m_genomes.size());
   std::vector<path> all_paths;
-  for (int i = 0; i < m_genomes.size() / 4; i++)
+  for (int i = 0; i < index; i++)
     all_paths.push_back(decode(m_genomes[i]));
   return all_paths;
 }

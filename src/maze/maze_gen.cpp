@@ -68,6 +68,7 @@ void maze_gen::prim(maze &maze)
 
   while (!frontier.empty())
   {
+    // get a random position from frontier vector
     int rand_index = rand() % frontier.size();
     position current = frontier[rand_index];
     frontier.erase(frontier.begin() + rand_index);
